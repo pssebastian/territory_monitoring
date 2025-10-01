@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Territory Monitoring</title>
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.3.4/css/dataTables.dataTables.css"/>
+  
+  <style>
+    /* Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      background: #0f172a;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 1rem;
+      z-index: 1000;
+    }
+
+    header h1 {
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+
+    nav {
+      display: flex;
+      gap: 1rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #fff;
+      font-size: 0.95rem;
+    }
+
+    /* Hamburger menu */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+    }
+
+    .menu-toggle span {
+      width: 25px;
+      height: 3px;
+      background: white;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+        flex-direction: column;
+        background: #1e293b;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 200px;
+        padding: 1rem;
+      }
+      nav.active {
+        display: flex;
+      }
+      .menu-toggle {
+        display: flex;
+      }
+    }
+
+    /* Section styling */
+    section {
+      padding: 3rem 1rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    section h2 {
+      margin-bottom: 0.5rem;
+      font-size: 1.4rem;
+      color: #0f172a;
+    }
+
+    section p {
+      margin-bottom: 1.5rem;
+      color: #555;
+    }
+
+    /* KPI Cards */
+    .kpi-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .kpi-card {
+      background: #f9fafb;
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      text-align: center;
+      box-shadow: 0 0 8px rgba(0,0,0,0.08);
+    }
+
+    .kpi-card h3 {
+      font-size: 1rem;
+      color: #0f172a;
+      margin-bottom: 0.5rem;
+    }
+
+    .kpi-card p {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #1e293b;
+    }
+
+    /* DataTables */
+    table.dataTable {
+      width: 100% !important;
+      background: #fff;
+      border-collapse: collapse;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #0f172a;
+      color: #fff;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>Territory Monitoring</h1>
+    <div class="menu-toggle" id="menuToggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <nav id="navMenu">
+      <a href="#dashboard">Key Metrics</a>
+      <a href="#territory-tracker">Territory Tracker</a>
+      <a href="#map-cards">Map Cards</a>
+    </nav>
+  </header>
+
+  <!-- Key Metrics -->
+  <section id="dashboard">
+    <h2>Key Metrics</h2>
+    <p>Quick overview of the most important performance indicators.</p>
+    <div class="kpi-container">
+      <div class="kpi-card">
+        <h3>Total Territories</h3>
+        <p id="totalTerritories"></p>
+      </div>
+      <div class="kpi-card">
+        <h3>Completed Territories</h3>
+        <p id="completedTerritories"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Territory Tracker -->
+  <section id="territory-tracker">
+    <h2>Territory Tracker</h2>
+    <p>Keep track of territories with detailed data tables updated in real-time.</p>
+    <table id="trackerTable" class="display">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Name</th>
+          <th>Territory No.</th>
+          <th>Status</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+    </table>
+  </section>
+
+  <!-- Map Cards -->
+  <section id="map-cards">
+    <h2>Map Cards</h2>
+    <p>Explore interactive map cards linked with territory data.</p>
+    <table id="mapTable" class="display">
+      <thead>
+        <tr>
+          <th>Territory No.</th>
+          <th>Group</th>
+          <th>Barangay</th>
+          <th>Map Card Link</th>
+        </tr>
+      </thead>
+    </table>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Territory Monitoring. All Rights Reserved.
+  </footer>
+  <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/2.3.4/js/dataTables.js"></script>
+</body>
+  <script>
+    // Mobile menu toggle
+    const menuToggle = document.getElementById("menuToggle");
+    const navMenu = document.getElementById("navMenu");
+
+    menuToggle.addEventListener("click", () => {
+      navMenu.classList.toggle("active");
+    });
+
+    // Initialize DataTables
+
+new DataTable('#trackerTable', {
+    ajax: 'https://script.google.com/macros/s/AKfycbwiHGz2AQdUEwKz_zVkMPlQzzxNNdMysp5TdtACCcaJS3jNDyqYzzrF0tyyU2_74u5TNA/exec',
+    columns: [
+        { 
+            data: 'Date',
+            render: function (data, type, row) {
+                if (!data) return '';
+                
+                // Ensure it's parsed as a date
+                let d = new Date(data);
+                
+                // Only format for display (not sorting/filtering)
+                if (type === 'display' || type === 'filter') {
+                    return d.toLocaleDateString('en-US', {
+                        month: 'short', // "Jan", "Feb", etc. (use "long" for full month)
+                        day: '2-digit',
+                        year: 'numeric'
+                    });
+                }
+                
+                return data; // raw data for sorting
+            }
+        },
+        { data: 'Pangalan' },
+        { data: 'Territory' },
+        { data: 'Status' },
+        { data: 'Notes' }
+    ],
+    columnDefs: [
+    { targets: 0, className: "dt-left" },
+    { targets: 1, className: "dt-left" },
+    { targets: 2, className: "dt-center" },
+    { targets: 3, className: "dt-left" },
+    { targets: 4, className: "dt-left" }
+  ]
+});
+
+new DataTable('#mapTable', {
+    ajax: 'https://script.google.com/macros/s/AKfycbw2366CIM7OuGu49ngLEfKIW5LJsdr9azLJ1mnsHcz4Mdcz8XDFSegcHucSknLfnJgqHg/exec',
+    columns: [
+        { data: 'territory' },
+        { data: 'group' },
+        { data: 'barangay' },
+        { 
+        data: 'map_card_link',
+        render: function(data, type, row, meta) {
+                if (type === 'display' && data && data.url) {
+                return '<a href="' + data.url + '" target="_blank" rel="noopener" ' +
+                        'style="display:inline-block; padding:4px 10px; ' +
+                        'border-radius:999px; background-color:#007bff; color:#fff; ' +
+                        'font-size:12px; text-decoration:none; white-space:nowrap;">' +
+                        (data.text || "Open") + '</a>';
+                }
+                return (data && data.text) || '';
+            }
+        }
+    ],
+    columnDefs: [
+    { targets: 0, className: "dt-center" },
+    { targets: 1, className: "dt-center" },
+    { targets: 2, className: "dt-center" },
+    { targets: 3, className: "dt-center" }
+  ]
+});
+  </script>
+</html>
