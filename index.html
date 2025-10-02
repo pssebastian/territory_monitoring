@@ -201,6 +201,7 @@
           <th>Group</th>
           <th>Barangay</th>
           <th>Map Card Link</th>
+          <th>Landmark/Boundary</th>
         </tr>
       </thead>
     </table>
@@ -263,7 +264,7 @@ new DataTable('#trackerTable', {
 });
 
 new DataTable('#mapTable', {
-    ajax: 'https://script.google.com/macros/s/AKfycbw2366CIM7OuGu49ngLEfKIW5LJsdr9azLJ1mnsHcz4Mdcz8XDFSegcHucSknLfnJgqHg/exec',
+    ajax: 'https://script.google.com/macros/s/AKfycbyq38VMdjodDd2a4oIbfWuXfWnyA4N9Zuar3ZKvMOAPBfEeq6eJSbotEJV3Yee8TmFiyw/exec',
     columns: [
         { data: 'territory' },
         { data: 'group' },
@@ -280,13 +281,15 @@ new DataTable('#mapTable', {
                 }
                 return (data && data.text) || '';
             }
-        }
+        },
+        { data: 'landmark_boundary' }
     ],
     columnDefs: [
     { targets: 0, className: "dt-center" },
     { targets: 1, className: "dt-center" },
     { targets: 2, className: "dt-center" },
-    { targets: 3, className: "dt-center" }
+    { targets: 3, className: "dt-center" },
+    { targets: 4, className: "dt-left" }
   ]
 });
   </script>
