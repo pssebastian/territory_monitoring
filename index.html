@@ -123,6 +123,23 @@
       color: #1e293b;
     }
 
+    .looker-container {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      padding-top: 56.25%; /* 16:9 aspect ratio */
+    }
+    
+    .looker-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+
     /* DataTables */
     table.dataTable {
       width: 100% !important;
@@ -158,20 +175,24 @@
   </header>
 
   <!-- Key Metrics -->
-  <section id="dashboard">
+<section id="dashboard" class="section">
+  <div class="container">
     <h2>Key Metrics</h2>
-    <p>Quick overview of the most important performance indicators.</p>
-    <div class="kpi-container">
-      <div class="kpi-card">
-        <h3>Total Territories</h3>
-        <p id="totalTerritories"></p>
-      </div>
-      <div class="kpi-card">
-        <h3>Completed Territories</h3>
-        <p id="completedTerritories"></p>
-      </div>
+    <p>This dashboard provides a quick overview of overall territory performance and completion statistics.</p>
+
+    <div class="looker-container">
+      <iframe
+        width="100%"
+        height="600"
+        src="https://lookerstudio.google.com/embed/reporting/0ab54d39-8557-4c33-8d83-eb62b00d5cb8/page/QIYaF"
+        frameborder="0"
+        style="border:0"
+        allowfullscreen
+        sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
+      </iframe>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- Territory Tracker -->
   <section id="territory-tracker">
@@ -295,3 +316,4 @@ new DataTable('#mapTable', {
   </script>
 
 </html>
+
