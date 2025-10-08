@@ -35,7 +35,7 @@
       font-weight: bold;
     }
 
-    nav {
+    #navMenu {
       display: flex;
       gap: 1rem;
     }
@@ -61,7 +61,7 @@
     }
 
     @media (max-width: 768px) {
-      nav {
+      #navMenu {
         display: none;
         flex-direction: column;
         background: #1e293b;
@@ -71,7 +71,7 @@
         width: 200px;
         padding: 1rem;
       }
-      nav.active {
+      #navMenu.active {
         display: flex;
       }
       .menu-toggle {
@@ -308,7 +308,8 @@ new DataTable('#trackerTable', {
     { targets: 2, className: "dt-center" },
     { targets: 3, className: "dt-left" },
     { targets: 4, className: "dt-left" }
-  ]
+  ],
+    scrollX: true
 });
 
 new DataTable('#mapTable', {
@@ -338,11 +339,13 @@ new DataTable('#mapTable', {
     { targets: 2, className: "dt-center" },
     { targets: 3, className: "dt-center" },
     { targets: 4, className: "dt-left" }
-  ]
+  ],
+    scrollX: true
 });
   </script>
 
 </html>
+
 
 
 
